@@ -65,3 +65,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem 'webpacker'
+
+gem 'bootstrap-sass', '~> 3.3', '>= 3.3.6'
