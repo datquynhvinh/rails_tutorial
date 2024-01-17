@@ -130,3 +130,16 @@ input {
         color: $state-danger-text;
     }
 }
+
+.logout-button {
+    padding: 5px 10px; /* Adjust padding as needed */
+    background-color: #d9534f; /* Bootstrap's danger color */
+    color: #fff; /* Text color */
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background-color: #c9302c; /* Darker color on hover */
+}
