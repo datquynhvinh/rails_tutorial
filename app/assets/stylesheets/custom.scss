@@ -143,3 +143,16 @@ input {
 .logout-button:hover {
     background-color: #c9302c; /* Darker color on hover */
 }
+
+.checkbox {
+    margin-top: -10px;
+    margin-bottom: 10px;
+    span {
+        margin-left: 20px;
+        font-weight: normal;
+    }
+}
+#session_remember_me {
+    width: auto;
+    margin-left: 0;
+}
