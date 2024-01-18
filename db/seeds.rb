@@ -28,3 +28,8 @@ User.create!(name: "Le Thac Dat",
         activated: true,
         activated_at: Time.zone.now)
 end
+
+users = User.order(:created_at).take(6)
+50.times do
+    users.each { |user| user.microposts.create!(content: "Example post #{DateTime.now.strftime("%d/%m/%Y %H:%M:%S")}") }
+end
