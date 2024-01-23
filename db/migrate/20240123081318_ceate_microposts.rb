@@ -1,4 +1,4 @@
-class CreateMicroposts < ActiveRecord::Migration[7.1]
+class CeateMicroposts < ActiveRecord::Migration[7.1]
   def change
     create_table :microposts do |t|
       t.text :content

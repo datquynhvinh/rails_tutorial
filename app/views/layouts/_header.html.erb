@@ -1,6 +1,6 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
     <div class="container">
-        <%= link_to "sample app", root_path, id: "logo" %>
+        <%= link_to "RAILS DEMO", root_path, id: "logo" %>
         <nav>
             <ul class="nav navbar-nav navbar-right">
                 <li><%= link_to "Home", root_path %></li>
@@ -14,14 +14,14 @@
                             <li><%= link_to "Settings", edit_user_path(current_user) %></li>
                             <li class="divider"></li>
                             <li>
-                                <%= form_tag(logout_path, method: :delete) do %>
+                                <%= form_tag(destroy_user_session_path, method: :delete) do %>
                                     <%= submit_tag "Log out", class: "btn logout-button" %>
                                 <% end %>
                             </li>
                         </ul>
                     </li>
                 <% else %>
-                    <li><%= link_to "Log in", login_path %></li>
+                    <li><%= link_to "Log in", new_user_session_path %></li>
                 <% end %>
             </ul>
         </nav>

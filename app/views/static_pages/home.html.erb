@@ -4,6 +4,9 @@
             <section class="user_info">
                 <%= render 'shared/user_info' %>
             </section>
+            <section class="stats">
+              <%= render 'shared/stats' %>
+            </section>
             <section class="micropost_form">
                 <%= render 'shared/micropost_form' %>
             </section>
@@ -21,7 +24,7 @@
             <a href="https://www.railstutorial.org/">Ruby on Rails Tutorial</a>
             sample application.
         </h2>
-        <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
+        <%= link_to "Sign up now!", new_user_registration_path, class: "btn btn-lg btn-primary" %>
     </div>
     <%= image_tag("mor.jpg", alt: "Rails logo", width: "200px") %>
 <% end %>
