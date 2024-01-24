@@ -263,3 +263,15 @@ span.image {
 .users.follow {
     padding: 0;
 }
+
+.auth-link {
+    margin-top: 10px;
+    height: 35px;
+    width: 28%;
+    display: inline-block;
+    padding: 10px 20px;
+    background-image: url('google_login_icon.png');
+    background-size: cover;
+    color: #ffffff;
+    text-decoration: none;
+}
