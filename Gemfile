@@ -93,3 +93,11 @@ gem 'mini_magick', '4.9.5'
 gem 'devise'
 
 gem 'pry-rails'
+
+gem "omniauth"
+
+gem "omniauth-google-oauth2"
+
+gem 'omniauth-rails_csrf_protection'
+
+gem 'dotenv-rails'
