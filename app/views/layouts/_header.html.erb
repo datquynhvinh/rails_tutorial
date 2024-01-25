@@ -12,6 +12,9 @@
                         <ul class="dropdown-menu">
                             <li><%= link_to "Profile", current_user %></li>
                             <li><%= link_to "Settings", edit_user_registration_path %></li>
+                            <% if admin_layout? %>
+                              <li><%= link_to "Settings", edit_user_registration_path %></li>
+                            <% end %>
                             <li class="divider"></li>
                             <li>
                                 <%= form_tag(destroy_user_session_path, method: :delete) do %>
