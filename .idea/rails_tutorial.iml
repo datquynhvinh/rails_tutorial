@@ -106,6 +106,7 @@
     <orderEntry type="library" scope="PROVIDED" name="omniauth-oauth2 (v1.8.0, asdf: 3.3.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="omniauth-rails_csrf_protection (v1.0.1, asdf: 3.3.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="orm_adapter (v0.5.0, asdf: 3.3.0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="paranoia (v2.6.3, asdf: 3.3.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="popper_js (v2.11.8, asdf: 3.3.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="pry (v0.14.2, asdf: 3.3.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="pry-rails (v0.3.9, asdf: 3.3.0) [gem]" level="application" />

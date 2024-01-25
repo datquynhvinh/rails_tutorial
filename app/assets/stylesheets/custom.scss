@@ -7,6 +7,7 @@ $gray-lighter: #777;
 $state-danger-text: #777;
 $gray-light: #777;
 
+
 /* universal */
 body {
     padding-top: 60px;
@@ -274,4 +275,32 @@ span.image {
     background-size: cover;
     color: #ffffff;
     text-decoration: none;
+}
+.sidebar-admin {
+    overflow-x: initial !important;
+    overflow-y: initial !important;;
+}
+.sidebar-search {
+    display: flex !important;
+}
+.sidebar-user-info {
+    height: 50px;
+    display: flex;
+}
+.sidebar-avatar {
+    margin: 0px 16px;
+}
+.sidebar-name {
+    font-size: 20px;
+}
+.username {
+    color: white;
+    font-size: 18px;
+    margin: 5px
+}
+.user-panel .image {
+    padding-top: 6px;
+}
+.user-panel img {
+    width: 3.1rem !important;
 }
