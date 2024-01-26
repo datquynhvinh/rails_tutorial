@@ -18,4 +18,10 @@ class ApplicationController < ActionController::Base
         def store_user_location!
             store_location_for(:user, request.fullpath)
         end
+
+        def valid_resource?(resource)
+            if resource.nil?
+                render file: "#{Rails.root}/public/404.html", status: :not_found, layout: false
+            end
+        end
 end

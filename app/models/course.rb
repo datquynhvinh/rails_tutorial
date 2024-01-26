@@ -1,3 +1,3 @@
 class Course < ApplicationRecord
-  has_many :lessions, dependent: :destroy
+  has_many :lessons, dependent: :destroy
 end

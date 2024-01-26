@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_26_032023) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_26_065632) do
   create_table "active_storage_attachments", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -46,12 +46,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_26_032023) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "lessions", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
-    t.bigint "courses_id", null: false
+  create_table "lessons", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
+    t.bigint "course_id", null: false
     t.text "name"
+    t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["courses_id"], name: "index_lessions_on_courses_id"
+    t.index ["course_id"], name: "index_lessons_on_course_id"
   end
 
   create_table "microposts", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
@@ -93,6 +94,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_26_032023) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "lessions", "courses", column: "courses_id"
+  add_foreign_key "lessons", "courses"
   add_foreign_key "microposts", "users"
 end

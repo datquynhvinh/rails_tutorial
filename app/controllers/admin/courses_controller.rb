@@ -5,5 +5,10 @@ class Admin::CoursesController < Admin::BaseController
 
   def show
     @course = Course.find_by(id: params[:id])
+    valid_resource?(@course)
+  end
+
+  def new
+    @course = Course.new
   end
 end

@@ -8,7 +8,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by(id: params[:id])
-    @microposts = @user.microposts.paginate(page: params[:page], per_page: 10)
+    valid_resource?(@user)
+    @microposts = @user.microposts.paginate(page: params[:page], per_page: 10) unless @user.nil?
   end
 
   def new
@@ -28,10 +29,12 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find_by(id: params[:id])
+    valid_resource?(@user)
   end
 
   def update
     @user = User.find_by(id: params[:id])
+    valid_resource?(@user)
     if @user.update(user_params)
       flash[:success] = "Profile updated"
       redirect_to @user
@@ -41,7 +44,9 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    User.find_by(id: params[:id]).destroy
+    @user = User.find_by(id: params[:id])
+    valid_resource?(@user)
+    @user.destroy
     flash[:success] = "User deleted"
     redirect_to users_url
   end
