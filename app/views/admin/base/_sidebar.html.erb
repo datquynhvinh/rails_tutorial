@@ -61,13 +61,12 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <%= link_to(admin_courses_path, class: "nav-link", data: { turbo: false}) do %>
             <i class="nav-icon fas fa-th"></i>
-            <p>
-              Simple Link
+            <p>Courses
               <span class="right badge badge-danger">New</span>
             </p>
-          </a>
+          <% end %>
         </li>
       </ul>
     </nav>

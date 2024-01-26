@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
   <title><%= full_title(yield(:title)) %></title>
   <%= stylesheet_link_tag 'adminlte/dist/css/adminlte.css' %>
@@ -9,102 +7,39 @@
   <%= favicon_link_tag 'mor.png' %>
 </head>
 
-  <body class="body-admin">
-    <div class="wrapper">
-      <%= render 'admin/base/header' %>
-      <%= render 'admin/base/sidebar' %>
+<body class="body-admin">
+  <div class="wrapper">
+    <%= render 'admin/base/header' %>
+    <%= render 'admin/base/sidebar' %>
 
-      <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-          <div class="container-fluid">
-            <div class="row mb-2">
-              <div class="col-sm-6">
-                <h1 class="m-0">Starter Page</h1>
-              </div><!-- /.col -->
-              <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active">Starter Page</li>
-                </ol>
-              </div><!-- /.col -->
-            </div><!-- /.row -->
-          </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
-
-        <!-- Main content -->
-        <div class="content">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-
-                    <p class="card-text">
-                      Some quick example text to build on the card title and make up the bulk of the card's
-                      content.
-                    </p>
-
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                  </div>
-                </div>
-
-                <div class="card card-primary card-outline">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-
-                    <p class="card-text">
-                      Some quick example text to build on the card title and make up the bulk of the card's
-                      content.
-                    </p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                  </div>
-                </div><!-- /.card -->
-              </div>
-              <!-- /.col-md-6 -->
-              <div class="col-lg-6">
-                <div class="card">
-                  <div class="card-header">
-                    <h5 class="m-0">Featured</h5>
-                  </div>
-                  <div class="card-body">
-                    <h6 class="card-title">Special title treatment</h6>
-
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                  </div>
-                </div>
-
-                <div class="card card-primary card-outline">
-                  <div class="card-header">
-                    <h5 class="m-0">Featured</h5>
-                  </div>
-                  <div class="card-body">
-                    <h6 class="card-title">Special title treatment</h6>
-
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                  </div>
-                </div>
-              </div>
-              <!-- /.col-md-6 -->
-            </div>
-            <!-- /.row -->
-          </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content -->
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2 m-1">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><%= link_to "Home", admin_root_path %></li>
+                <li class="breadcrumb-item active"><%= yield(:title) %></li>
+              </ol>
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
       </div>
-      <!-- /.content-wrapper -->
+      <!-- /.content-header -->
 
-      <%= render 'admin/base/footer' %>
-      <%= render 'admin/base/control_sidebar' %>
+      <!-- Main content -->
+      <div class="content">
+        <div class="container-fluid">
+          <%= yield %>
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content -->
     </div>
+    <!-- /.content-wrapper -->
 
-    <%= javascript_include_tag 'plugins/jquery/jquery.min', 'plugins/bootstrap/js/bootstrap.bundle.min', 'dist/js/adminlte.min' %>
-  </body>
-</html>
+    <%= render 'admin/base/footer' %>
+    <%= render 'admin/base/control_sidebar' %>
+  </div>
+
+  <%= javascript_include_tag 'plugins/jquery/jquery.min', 'plugins/bootstrap/js/bootstrap.bundle.min', 'dist/js/adminlte.min' %>
+</body>
