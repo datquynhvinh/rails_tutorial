@@ -41,5 +41,15 @@
     <%= render 'admin/base/control_sidebar' %>
   </div>
 
+  <%= javascript_include_tag 'application' %>
   <%= javascript_include_tag 'plugins/jquery/jquery.min', 'plugins/bootstrap/js/bootstrap.bundle.min', 'dist/js/adminlte.min' %>
 </body>
+
+<script>
+    function confirmDelete(event) {
+        var confirmMessage = confirm("Are you sure?");
+        if (!confirmMessage) {
+            event.preventDefault(); // Ngăn chặn sự kiện mặc định (ví dụ: không chuyển hướng)
+        }
+    }
+</script>

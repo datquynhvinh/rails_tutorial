@@ -1,0 +1,35 @@
+<% provide(:title, 'Courses') %>
+
+<h1>Courses</h1>
+  <% @courses.each_slice(3) do |course_group| %>
+    <div class="row">
+      <% course_group.each do |course| %>
+        <div class="col-md-4">
+          <% @colors = %w[bg-info bg-warning bg-success] unless @colors.present? %>
+          <% @current_color_index ||= 0 %>
+          <% @current_color = @colors[@current_color_index] %>
+          <% @current_color_index = (@current_color_index + 1) % @colors.length %>
+          <%= link_to lessons_admin_user_course_path(user_id: @user.id, course_id: course.id), class: "no-underline" do %>
+            <div class="relative overflow-hidden">
+              <%= image_tag('courses/' + course.image, class: "object-cover rounded-t-lg w-full h-full course-image") %>
+            </div>
+            <div class="info-box <%= @current_color %>">
+
+              <span class="info-box-icon"><i class="fas fa-book-open"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text"><%= course.name %></span>
+                <span class="info-box-number"><%= rand(100..200) %></span>
+
+                <div class="progress">
+                  <div class="progress-bar" style="width: 70%"></div>
+                </div>
+                <span class="progress-description">70% Increase in 30 Days</span>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+      <% end %>
+    </div>
+  <% end %>

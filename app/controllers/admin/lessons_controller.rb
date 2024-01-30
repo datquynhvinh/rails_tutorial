@@ -8,6 +8,7 @@ class Admin::LessonsController < Admin::BaseController
   def new
     @lesson = Lesson.new
     @courses = Course.all
+    @lesson.sections.build
   end
 
   def create
@@ -23,13 +24,13 @@ class Admin::LessonsController < Admin::BaseController
 
   def edit
     @lesson = Lesson.find_by(id: params[:id])
-    valid_resource?(@lesson)
+    return unless valid_resource?(@lesson)
     @courses = Course.all
   end
 
   def update
     @lesson = Lesson.find_by(id: params[:id])
-    valid_resource?(@lesson)
+    return unless valid_resource?(@lesson)
 
     if !@lesson.nil? && @lesson.update(lesson_params)
       @course = Course.find_by(id: @lesson.course_id)
@@ -40,8 +41,17 @@ class Admin::LessonsController < Admin::BaseController
     end
   end
 
+  def destroy
+    @lesson = Lesson.find_by(id: params[:id])
+    return unless valid_resource?(@lesson)
+
+    @lesson.destroy
+    flash[:success] = "Lesson deleted"
+    redirect_back(fallback_location: root_path)
+  end
+
   private
     def lesson_params
-      params.require(:lesson).permit(:name, :description, :course_id)
+      params.require(:lesson).permit(:name, :description, :course_id, sections_attributes: [:id, :name, :question, :answer, :_destroy])
     end
 end

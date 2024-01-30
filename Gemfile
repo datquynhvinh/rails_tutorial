@@ -103,3 +103,9 @@ gem 'omniauth-rails_csrf_protection'
 gem 'dotenv-rails'
 
 gem "paranoia"
+
+gem "ransack"
+
+gem 'delayed_job_active_record'
+
+gem 'cocoon'

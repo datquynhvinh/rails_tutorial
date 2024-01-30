@@ -27,5 +27,7 @@ module RailsTutorial
 
     # Enable the asset pipeline
     config.assets.enabled = true
+
+    config.active_job.queue_adapter = :delayed_job
   end
 end

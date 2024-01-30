@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_26_065632) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_30_094355) do
   create_table "active_storage_attachments", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -46,6 +46,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_26_065632) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "delayed_jobs", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
+    t.integer "priority", default: 0, null: false
+    t.integer "attempts", default: 0, null: false
+    t.text "handler", null: false
+    t.text "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string "locked_by"
+    t.string "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
   create_table "lessons", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.bigint "course_id", null: false
     t.text "name"
@@ -74,6 +89,39 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_26_065632) do
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
+  create_table "sections", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
+    t.bigint "lesson_id", null: false
+    t.text "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "question"
+    t.string "answer"
+    t.index ["lesson_id"], name: "index_sections_on_lesson_id"
+  end
+
+  create_table "user_courses", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "course_id", null: false
+    t.date "enrolled_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_user_courses_on_course_id"
+    t.index ["user_id", "course_id"], name: "index_user_courses_on_user_id_and_course_id", unique: true
+    t.index ["user_id"], name: "index_user_courses_on_user_id"
+  end
+
+  create_table "user_section_statuses", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "section_id", null: false
+    t.integer "status", default: 0, comment: "user section status 0: open, 1: process, 2: done."
+    t.date "completed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["section_id"], name: "index_user_section_statuses_on_section_id"
+    t.index ["user_id", "section_id"], name: "index_user_section_statuses_on_user_id_and_section_id", unique: true
+    t.index ["user_id"], name: "index_user_section_statuses_on_user_id"
+  end
+
   create_table "users", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.string "email", default: "", null: false
@@ -95,5 +143,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_26_065632) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "lessons", "courses"
-  add_foreign_key "microposts", "users"
+  add_foreign_key "microposts", "users", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "sections", "lessons", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "user_courses", "courses", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "user_courses", "users", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "user_section_statuses", "sections", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "user_section_statuses", "users", on_update: :cascade, on_delete: :cascade
 end

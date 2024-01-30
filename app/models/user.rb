@@ -5,6 +5,8 @@ class User < ApplicationRecord
   has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
+  has_many :user_courses, dependent: :destroy
+  has_many :user_section_statuses, dependent: :destroy
 
   before_save :downcase_email
   devise :database_authenticatable, :registerable,
@@ -36,8 +38,21 @@ class User < ApplicationRecord
     end
   end
 
+  def send_reset_password_instructions
+    token = set_reset_password_token
+    send_reset_password_instructions_job(token)
+  end
+
   private
     def downcase_email
       self.email = email.downcase
+    end
+
+    def self.ransackable_attributes(*)
+      %w[name]
+    end
+
+    def send_reset_password_instructions_job(token)
+      ResetPasswordEmailJob.perform_later(self, token)
     end
 end

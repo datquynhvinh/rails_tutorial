@@ -24,6 +24,15 @@ Rails.application.routes.draw do
     root 'dashboard#index'
     resources :dashboard, only: [:index]
     resources :courses
-    resources :lessons
+    resources :lessons do
+      resources :sections
+    end
+    resources :users
+    resources :user_courses, param: :user_id do
+      member do
+        get 'lessons/:course_id', to: 'user_courses#lessons', as: :lessons
+        get 'lessons/:course_id/sections/:lesson_id', to: 'user_courses#sections', as: :sections
+      end
+    end
   end
 end

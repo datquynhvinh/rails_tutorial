@@ -22,6 +22,9 @@ class ApplicationController < ActionController::Base
         def valid_resource?(resource)
             if resource.nil?
                 render file: "#{Rails.root}/public/404.html", status: :not_found, layout: false
+                return false
             end
+
+            true
         end
 end

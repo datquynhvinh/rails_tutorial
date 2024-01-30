@@ -21,6 +21,16 @@
           <label for="inputStatus">Course</label>
           <%= f.collection_select :course_id, @courses, :id, :name, { include_blank: "Select one" }, class: "form-control custom-select" %>
         </div>
+
+        <h3>Sections</h3>
+        <div id="sections" class="ml-5">
+          <%= f.fields_for :sections do |section_form| %>
+            <%= render 'section_fields', f: section_form %>
+          <% end %>
+          <div class="links">
+            <%= link_to_add_association 'Add Section', f, :sections %>
+          </div>
+        </div>
       </div>
     </div>
     <div class="row d-flex justify-content-center">
