@@ -8,6 +8,9 @@ class User < ApplicationRecord
   has_many :user_courses, dependent: :destroy
   has_many :user_section_statuses, dependent: :destroy
 
+  has_one_attached :avatar
+  validates :avatar, content_type: { in: %w[image/jpeg image/gif image/png], message: "must be a valid image format" }, size: { less_than: 5.megabytes, message: "should be less than 5MB" }
+
   before_save :downcase_email
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,

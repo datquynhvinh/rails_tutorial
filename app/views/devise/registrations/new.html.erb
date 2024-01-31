@@ -30,6 +30,12 @@
         <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
       </div>
 
+      <div class="field">
+        <span class="image">
+          <%= f.file_field :avatar, accept: "image/jpeg,image/gif,image/png" %>
+        </span>
+      </div>
+
       <div class="actions">
         <%= f.submit "Sign up", class: "btn btn-primary" %>
       </div>
