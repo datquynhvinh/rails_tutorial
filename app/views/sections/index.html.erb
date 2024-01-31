@@ -30,8 +30,9 @@
             <td>
               <% if section.status == 0 %>
                 <%= form_for(section, url: user_user_section_status_path(user_id: current_user.id, section_id: section.id), html: { id: 'answerForm' }) do |f| %>
+                  <div><%= hidden_field_tag :course_id, @course.id %></div>
                   <div><%= hidden_field_tag :section_id, section.id %></div>
-                  <div><%= hidden_field_tag :user_id, current_user.id %></div>
+                  <div><%= hidden_field_tag :lesson_id, section.lesson_id %></div>
                   <label style="width: 100%" >
                     <%= f.text_field :answer, value: '' %>
                     <button type="submit">Kiểm tra đáp án</button>

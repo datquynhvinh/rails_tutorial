@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_30_094355) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_31_100727) do
   create_table "active_storage_attachments", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -37,6 +37,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_30_094355) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "activities", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.text "activity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
   create_table "courses", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
@@ -113,12 +121,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_30_094355) do
   create_table "user_section_statuses", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "section_id", null: false
-    t.integer "status", default: 0, comment: "user section status 0: open, 1: process, 2: done."
+    t.integer "status", default: 0, comment: "user section status 0: open, 1: done."
     t.date "completed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["section_id"], name: "index_user_section_statuses_on_section_id"
-    t.index ["user_id", "section_id"], name: "index_user_section_statuses_on_user_id_and_section_id", unique: true
+    t.index ["section_id"], name: "fk_user_section_statuses_2_idx"
     t.index ["user_id"], name: "index_user_section_statuses_on_user_id"
   end
 
@@ -142,11 +149,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_30_094355) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "activities", "users", on_update: :cascade, on_delete: :cascade
   add_foreign_key "lessons", "courses"
   add_foreign_key "microposts", "users", on_update: :cascade, on_delete: :cascade
   add_foreign_key "sections", "lessons", on_update: :cascade, on_delete: :cascade
   add_foreign_key "user_courses", "courses", on_update: :cascade, on_delete: :cascade
   add_foreign_key "user_courses", "users", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "user_section_statuses", "sections", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "user_section_statuses", "users", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "user_section_statuses", "sections", name: "fk_user_section_statuses_2"
+  add_foreign_key "user_section_statuses", "users", name: "fk_user_section_statuses_1", on_update: :cascade, on_delete: :cascade
 end

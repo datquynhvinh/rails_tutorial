@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :followers, through: :passive_relationships, source: :follower
   has_many :user_courses, dependent: :destroy
   has_many :user_section_statuses, dependent: :destroy
+  has_many :activities, dependent: :destroy
 
   has_one_attached :avatar
   validates :avatar, content_type: { in: %w[image/jpeg image/gif image/png], message: "must be a valid image format" }, size: { less_than: 5.megabytes, message: "should be less than 5MB" }
@@ -23,10 +24,16 @@ class User < ApplicationRecord
 
   def follow(other_user)
     following << other_user
+    create_activity("#{self.name} Followed #{other_user.name}")
   end
 
   def unfollow(other_user)
     following.delete(other_user)
+    create_activity("#{self.name} Unfollowed #{other_user.name}")
+  end
+
+  def create_activity(activity_description)
+    activities.create(activity: activity_description)
   end
 
   def following?(other_user)
