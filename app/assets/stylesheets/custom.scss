@@ -314,3 +314,27 @@ span.image {
 .no-underline {
     text-decoration: none !important;
 }
+.relative {
+    position: relative;
+}
+.overflow-hidden {
+    overflow: hidden;
+}
+.no-underline {
+    text-decoration: none;
+}
+.course-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.bg-info {
+    background-color: #63a69f;
+}
+.bg-warning {
+    background-color: #f5b041;
+}
+.bg-success {
+    background-color: #5cb85c;
+}

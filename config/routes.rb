@@ -14,12 +14,20 @@ Rails.application.routes.draw do
 
   resources :microposts, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
+  resources :user_courses, only: [:index]
+  resources :courses, only: [:index] do
+    resources :lessons, only: [:index] do
+      resources :sections, only: [:index]
+    end
+  end
   resources :users do
     member do
       get :following, :followers
     end
+    resources :user_section_statuses, only: [:update], param: :section_id
   end
 
+  # Admin
   namespace :admin do
     root 'dashboard#index'
     resources :dashboard, only: [:index]

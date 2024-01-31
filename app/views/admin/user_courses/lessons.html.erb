@@ -27,7 +27,7 @@
           order_number = 0
           if @lessons.present? && @lessons.any?
             @lessons.each do |lesson|
-              progress = rand(1..100)
+              progress = @lessons_with_completion[lesson.id]
 
               selected_color = nil
               progress_color.each do |key, color|

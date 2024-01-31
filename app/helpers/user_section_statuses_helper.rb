@@ -1,0 +1,2 @@
+module UserSectionStatusesHelper
+end
