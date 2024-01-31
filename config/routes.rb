@@ -14,7 +14,6 @@ Rails.application.routes.draw do
 
   resources :microposts, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
-  resources :user_courses, only: [:index]
   resources :courses, only: [:index] do
     resources :lessons, only: [:index] do
       resources :sections, only: [:index]
@@ -35,8 +34,8 @@ Rails.application.routes.draw do
     resources :lessons do
       resources :sections
     end
-    resources :users
-    resources :user_courses, param: :user_id do
+    resources :users do
+      resources :user_courses, only: [:index, :new, :create, :destroy]
       member do
         get 'lessons/:course_id', to: 'user_courses#lessons', as: :lessons
         get 'lessons/:course_id/sections/:lesson_id', to: 'user_courses#sections', as: :sections

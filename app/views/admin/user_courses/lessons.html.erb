@@ -40,7 +40,7 @@
 
           <tr>
             <td><%= order_number+= 1 %></td>
-            <td><%= link_to lesson.name, sections_admin_user_course_path(user_id: @user.id, course_id: @course.id, lesson_id: lesson.id)%></td>
+            <td><%= link_to lesson.name, sections_admin_user_path(id: @user.id, course_id: @course.id, lesson_id: lesson.id)%></td>
             <td>
               <div class="progress progress-xs">
                 <div class="progress-bar <%= selected_color %>" style="width: <%= progress %>%"></div>

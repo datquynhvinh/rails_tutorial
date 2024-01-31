@@ -338,3 +338,18 @@ span.image {
 .bg-success {
     background-color: #5cb85c;
 }
+.checkbox-list {
+    max-width: 400px;
+    margin: auto;
+}
+.form-check {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.form-check-input {
+    margin-right: 10px;
+}
+.btn-primary {
+    margin-top: 10px;
+}
