@@ -117,3 +117,5 @@ gem 'whenever'
 gem 'daemons'
 
 gem "sidekiq"
+
+gem 'elasticsearch-rails'

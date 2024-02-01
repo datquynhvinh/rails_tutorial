@@ -52,21 +52,34 @@ class Admin::UsersController < Admin::BaseController
     redirect_to admin_users_url
   end
 
-  private
-  def user_params
-    params.require(:user).permit(:name, :password, :password_confirmation)
-  end
-
-  def logged_in_user
-    unless logged_in?
-      store_location
-      flash[:danger] = "Please log in."
-      redirect_to login_url
-    end
-  end
-
-  def correct_user
+  def set_role
     @user = User.find_by(id: params[:id])
-    redirect_to(root_url) unless @user == current_user
+    return unless valid_resource?(@user)
+
+    if @user.update(is_admin: params[:is_admin])
+      flash[:success] = "Updated"
+    else
+      flash[:danger] = "Error"
+    end
+
+    redirect_to admin_users_url
   end
+
+  private
+    def user_params
+      params.require(:user).permit(:name, :password, :password_confirmation)
+    end
+
+    def logged_in_user
+      unless logged_in?
+        store_location
+        flash[:danger] = "Please log in."
+        redirect_to login_url
+      end
+    end
+
+    def correct_user
+      @user = User.find_by(id: params[:id])
+      redirect_to(root_url) unless @user == current_user
+    end
 end

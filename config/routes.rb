@@ -38,6 +38,7 @@ Rails.application.routes.draw do
     resources :users do
       resources :user_courses, only: [:index, :new, :create, :destroy]
       member do
+        put 'set_role', to: 'users#set_role'
         get 'lessons/:course_id', to: 'user_courses#lessons', as: :lessons
         get 'lessons/:course_id/sections/:lesson_id', to: 'user_courses#sections', as: :sections
       end
