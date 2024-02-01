@@ -9,7 +9,10 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by(id: params[:id])
     return unless valid_resource?(@user)
-    @microposts = @user.microposts.paginate(page: params[:page], per_page: 10) unless @user.nil?
+    @microposts = @user.microposts.paginate(page: params[:microposts_page], per_page: 10) unless @user.nil?
+
+    following_ids = @user.active_relationships.pluck(:followed_id) << @user.id
+    @activities = Activity.includes(:user).where(user_id: following_ids).paginate(page: params[:activities_page], per_page: 5)
   end
 
   def new

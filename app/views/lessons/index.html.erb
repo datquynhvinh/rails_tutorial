@@ -13,6 +13,7 @@
         <th>Task</th>
         <th>Progress</th>
         <th style="width: 40px">Label</th>
+        <th style="width: 100px"></th>
       </tr>
       </thead>
       <tbody>
@@ -40,7 +41,7 @@
           <tr>
             <td><%= order_number+= 1 %></td>
             <td>
-              <%= link_to lesson.name, course_lesson_sections_path(course_id: @course.id, lesson_id: lesson.id)%>
+              <%= lesson.name %>
             </td>
             <td>
               <div class="progress progress-xs">
@@ -48,6 +49,16 @@
               </div>
             </td>
             <td><span class="badge <%= selected_color %>"><%= progress %>%</span></td>
+            <td style="text-align: center;">
+              <%= link_to course_lesson_sections_path(course_id: @course.id, lesson_id: lesson.id) do %>
+                <% if progress != 100
+                     "Start"
+                   else
+                     "View"
+                   end
+                %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
 

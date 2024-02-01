@@ -1,0 +1,10 @@
+<li>
+  <%= link_to activity.user do %>
+    <% if activity.user.avatar.attached? %>
+      <%= image_tag(activity.user.avatar, size: '50x50') %>
+    <% else %>
+      <%= gravatar_for(activity.user, size: 50) %>
+    <% end %>
+  <% end %>
+  <span class="user"><%= activity.activity %></span>
+</li>

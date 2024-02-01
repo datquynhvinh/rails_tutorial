@@ -1,15 +1,36 @@
 <% @user ||= current_user %>
-<div class="stats">
-  <a href="<%= following_user_path(@user) %>">
+<div class="stats" style="display: flex;">
+  <span id="following-link">
+    Following (<%= @user.following.count %>)
     <strong id="following" class="stat">
-      <%= @user.following.count %>
+      <% @user.following.each do |user| %>
+        <li style="display: flex; margin-top: 3px">
+          <% if user.avatar.attached? %>
+            <%= image_tag user.avatar, size: '50x50' if user.avatar.attached? %>
+          <% else %>
+              <%= gravatar_for(user, size: 50) %>
+          <% end %>
+          <%= link_to user.name, user, style: "margin: 14px;" %>
+        </li>
+      <% end %>
     </strong>
-    following
-  </a>
-  <a href="<%= followers_user_path(@user) %>">
+
+  </span>
+  <span id="followers-link" style="margin-left: 10px">
+    Followers (<%= @user.followers.count %>)
     <strong id="followers" class="stat">
-      <%= @user.followers.count %>
+      <% @user.followers.each do |user| %>
+        <li style="display: flex; margin-top: 3px">
+          <% if user.avatar.attached? %>
+            <%= image_tag user.avatar, size: '50x50' if user.avatar.attached? %>
+          <% else %>
+              <%= gravatar_for(user, size: 50) %>
+          <% end %>
+          <%= link_to user.name, user, style: "margin: 14px;" %>
+        </li>
+      <% end %>
     </strong>
-    followers
-  </a>
+
+  </span>
 </div>
+

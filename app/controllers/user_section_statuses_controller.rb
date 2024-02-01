@@ -14,9 +14,9 @@ class UserSectionStatusesController < ApplicationController
     @user_section_status = UserSectionStatus.find_or_create_by(user_id: current_user.id, section_id: section_id)
     if @section.answer == params[:section][:answer]
       @user_section_status.update(completed_at: DateTime.now, status: 1)
-      flash[:success] = "Answer correct!"
+      flash[:success] = "Answer correct! Answer is #{@section.answer}"
     else
-      flash[:danger] = "Answer not correct!"
+      flash[:danger] = "Answer not correct! Answer is #{@section.answer}"
     end
 
     @sections_unfinished = @lesson.sections
