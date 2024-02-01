@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   # Admin
   namespace :admin do
     root 'dashboard#index'
+    post '/send-notify', to: 'daily_notifications#send_daily_activities_email'
     resources :dashboard, only: [:index]
     resources :courses
     resources :lessons do

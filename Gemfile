@@ -111,3 +111,9 @@ gem 'delayed_job_active_record'
 gem 'cocoon'
 
 gem 'activerecord-session_store'
+
+gem 'whenever'
+
+gem 'daemons'
+
+gem "sidekiq"
