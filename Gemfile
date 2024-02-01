@@ -109,3 +109,5 @@ gem "ransack"
 gem 'delayed_job_active_record'
 
 gem 'cocoon'
+
+gem 'activerecord-session_store'

@@ -5,13 +5,20 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # devise :omniauthable, omniauth_providers: [:google]
 
   def google_oauth2
-    @user = User.from_omniauth(request.env["omniauth.auth"])
+    auth_data = request.env["omniauth.auth"]
+    @user = User.from_omniauth(auth_data)
 
     if @user.persisted?
-      flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Google"
-      sign_in_and_redirect @user, :event => :authentication
+      unless @user.deleted_at.nil?
+        flash[:notice] = 'User is deleted!'
+        redirect_to new_user_registration_url
+      else
+        @user.save(name: auth_data["info"]["name"], email: auth_data["info"]["email"], provider: auth_data.provider, uid: auth_data.uid)
+        flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Google"
+        sign_in_and_redirect @user, :event => :authentication
+      end
     else
-      session["devise.google_data"] = request.env["omniauth.auth"]
+      session["devise.google_data"] = auth_data.select { |k, v| k == "email" }
       redirect_to new_user_registration_url
     end
   end
