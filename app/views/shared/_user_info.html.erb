@@ -4,5 +4,5 @@
   <%= gravatar_for(current_user, size: 50) %>
 <% end %>
 <h1 style="margin-top: 10px;"><%= current_user.name %></h1>
-<span><%= link_to "view my profile", current_user %></span>
+<span><%= link_to "View my profile", current_user %></span>
 <span><%= pluralize(current_user.microposts.count, "micropost") %></span>
