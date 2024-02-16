@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_01_015814) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_02_034825) do
   create_table "active_storage_attachments", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -88,8 +88,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_01_015814) do
   end
 
   create_table "relationships", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
-    t.integer "follower_id"
-    t.integer "followed_id"
+    t.bigint "follower_id"
+    t.bigint "followed_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["followed_id"], name: "index_relationships_on_followed_id"
@@ -161,6 +161,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_01_015814) do
   add_foreign_key "activities", "users", on_update: :cascade, on_delete: :cascade
   add_foreign_key "lessons", "courses"
   add_foreign_key "microposts", "users", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "relationships", "users", column: "followed_id", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "relationships", "users", column: "follower_id", on_update: :cascade, on_delete: :cascade
   add_foreign_key "sections", "lessons", on_update: :cascade, on_delete: :cascade
   add_foreign_key "user_courses", "courses", on_update: :cascade, on_delete: :cascade
   add_foreign_key "user_courses", "users", on_update: :cascade, on_delete: :cascade

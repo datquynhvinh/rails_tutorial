@@ -7,12 +7,18 @@
       <%= render "devise/shared/error_messages", resource: resource %>
 
       <div class="field">
+        <%= f.label :name %><br />
+        <%= f.text_field :name, autofocus: true, autocomplete: "name", class: 'form-control' %>
+      </div>
+
+      <div class="field">
         <%= f.label :email %><br />
         <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', disabled: true %>
       </div>
 
       <div class="field">
         <%= f.label :current_password %>
+        <span style="color: red;">(*)</span>
         <%= f.password_field :current_password, autocomplete: "current-password", class: 'form-control' %>
       </div>
 

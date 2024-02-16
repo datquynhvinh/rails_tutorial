@@ -1,7 +1,8 @@
 <li style="display: flex;">
-  <%= image_tag user.avatar, size: '50x50' if user.avatar.attached? %>
+  <% if user.avatar.attached? %>
+    <%= image_tag user.avatar, size: '50x50' %>
+  <% else %>
+    <%= gravatar_for user, size: 50 %>
+  <% end %>
   <%= link_to user.name, user, style: "margin: 14px;" %>
-  <% unless current_user?(user) %>
-     <%=  button_to "|       Delete account", user, method: :delete, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, class: 'btn-link', style: "margin: 11px -18px;"  %>
-  <%  end %>
 </li>

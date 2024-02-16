@@ -1,4 +1,6 @@
 class SectionsController < ApplicationController
+  before_action :logged_in_user
+
   def index
     @course = Course.find_by(id: params[:course_id])
     return unless valid_resource?(@course)

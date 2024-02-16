@@ -1,4 +1,6 @@
 class UserSectionStatusesController < ApplicationController
+  before_action :logged_in_user
+
   def update
     section_id = params[:section_id]
 
