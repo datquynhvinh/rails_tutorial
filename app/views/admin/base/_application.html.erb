@@ -1,0 +1,60 @@
+<head>
+  <title><%= full_title(yield(:title)) %></title>
+  <%= stylesheet_link_tag 'adminlte/dist/css/adminlte.css' %>
+  <%= render 'layouts/rails_default' %>
+  <%= render 'layouts/shim' %>
+  <%= javascript_importmap_tags %>
+  <%= favicon_link_tag 'mor.png' %>
+</head>
+
+<body class="body-admin">
+  <div class="wrapper">
+    <%= render 'admin/base/header' %>
+    <%= render 'admin/base/sidebar' %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <div class="container">
+        <% flash.each do |message_type, message| %>
+          <div class="alert alert-<%= message_type %>"><%= message %></div>
+        <% end %>
+      </div>
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2 m-1">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><%= link_to "Home", admin_root_path %></li>
+                <li class="breadcrumb-item active"><%= yield(:title) %></li>
+              </ol>
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
+
+      <!-- Main content -->
+      <div class="content">
+        <div class="container-fluid">
+          <%= yield %>
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <%= render 'admin/base/footer' %>
+    <%= render 'admin/base/control_sidebar' %>
+  </div>
+
+  <%= javascript_include_tag 'application' %>
+  <%= javascript_include_tag 'plugins/jquery/jquery.min', 'plugins/bootstrap/js/bootstrap.bundle.min', 'dist/js/adminlte.min' %>
+</body>
+
+<script>
+    function confirmDelete(event) {
+        var confirmMessage = confirm("Are you sure?");
+        if (!confirmMessage) {
+            event.preventDefault(); // Ngăn chặn sự kiện mặc định (ví dụ: không chuyển hướng)
+        }
+    }
+</script>

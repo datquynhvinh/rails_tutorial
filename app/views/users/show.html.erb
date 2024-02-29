@@ -3,18 +3,35 @@
     <aside class="col-md-4">
         <section class="user_info">
             <h1>
-                <%= gravatar_for @user %>
+                <% if @user.avatar.attached? %>
+                  <%= image_tag @user.avatar, size: '150x150' %>
+                <% else %>
+                  <%= gravatar_for(@user, size: 50) %>
+                <% end %>
                 <%= @user.name %>
             </h1>
         </section>
+        <section class="stats">
+          <%= render 'shared/stats' %>
+        </section>
     </aside>
     <div class="col-md-8">
-        <% if @user.microposts.any? %>
-            <h3>Microposts (<%= @user.microposts.count %>)</h3>
-            <ol class="microposts">
-                <%= render @microposts %>
-            </ol>
-            <%= paginate @microposts %>
-        <% end %>
-</div>
+      <%= render 'follow_form' if logged_in? %>
+
+      <h3>Activities</h3>
+      <% unless @activities.empty? %>
+        <ol class="microposts">
+          <%= render @activities %>
+        </ol>
+        <%= paginate @activities, param_name: 'activities_page' %>
+      <% end %>
+
+      <h3>Microposts (<%= @user.microposts.count %>)</h3>
+      <% if @user.microposts.any? %>
+          <ol class="microposts">
+              <%= render @microposts %>
+          </ol>
+          <%= paginate @microposts, param_name: 'microposts_page' %>
+      <% end %>
+    </div>
 </div>

@@ -1,0 +1,46 @@
+<% provide(:title, 'Course / ' + @course.name + ' / ' + @lesson.name) %>
+
+<div class="card">
+  <div class="card-header col-12">
+    <h1 class="card-title lessons-title"><%= @course.name %> - <%= @lesson.name %></h1>
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th style="width: 10px">#</th>
+        <th>Section</th>
+        <th>Question</th>
+        <th>Answer</th>
+        <th>Status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <%
+        order_number = 0
+        if @sections.present? && @sections.any?
+          @sections.each do |section|
+      %>
+          <tr>
+            <td><%= order_number+= 1 %></td>
+            <td><%= section.name %></td>
+            <td><%= section.question %></td>
+            <td><%= section.answer %></td>
+            <td>
+              <%= section.status == 0 ? 'Open' : 'Done' %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+
+  </div>
+  <!-- /.card-body -->
+  <div class="card-footer d-flex justify-content-end">
+    <%= paginate @sections %>
+  </div>
+  <!-- /.card -->
+</div>
+

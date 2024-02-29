@@ -1,6 +1,7 @@
 require_relative "boot"
 
 require "rails/all"
+require 'dotenv/load'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -26,5 +27,7 @@ module RailsTutorial
 
     # Enable the asset pipeline
     config.assets.enabled = true
+    config.environment = 'development'
+    config.active_job.queue_adapter = :delayed_job
   end
 end

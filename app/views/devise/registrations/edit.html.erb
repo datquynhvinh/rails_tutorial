@@ -1,0 +1,65 @@
+<% provide(:title, 'Sign up') %>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <h1 class="center" >Edit <%= resource_name.to_s.humanize %></h1>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="field">
+        <%= f.label :name %><br />
+        <%= f.text_field :name, autofocus: true, autocomplete: "name", class: 'form-control' %>
+      </div>
+
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', disabled: true %>
+      </div>
+
+      <div class="field">
+        <%= f.label :current_password %>
+        <span style="color: red;">(*)</span>
+        <%= f.password_field :current_password, autocomplete: "current-password", class: 'form-control' %>
+      </div>
+
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+
+      <div class="field">
+        <%= f.label :password %><em>(<%= @minimum_password_length %> characters minimum)</em>
+        <%= f.password_field :password, autocomplete: "new-password", class: 'form-control' %>
+        <% if @minimum_password_length %>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
+      </div>
+
+      <div class="field">
+        <span class="image">
+          <%= f.file_field :avatar, accept: "image/jpeg,image/gif,image/png" %>
+        </span>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Update", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+
+    <h3>Cancel my account</h3>
+    <div><%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+    <%= link_to "Back", :back %>
+  </div>
+</div>
+
+<script type="text/javascript">
+      $("#user_image").bind("change", function() {
+            var size_in_megabytes = this.files[0].size/1024/1024;
+            if (size_in_megabytes > 5) {
+                  alert("Maximum file size is 5MB. Please choose a smaller file.");
+            }
+      });
+</script>

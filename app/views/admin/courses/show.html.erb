@@ -1,0 +1,43 @@
+<% provide(:title, 'Course / ' + @course.name) %>
+
+  <div class="card">
+    <div class="card-header col-12">
+      <h1 class="card-title lessons-title"><%= @course.name %> - Lessons</h1>
+      <%= link_to "New Lesson", new_admin_lesson_path, class: "card-title lessons-title float-right"  %>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th style="width: 10px">#</th>
+            <th>Task</th>
+            <th style="width: 80px"></th>
+          </tr>
+        </thead>
+        <tbody>
+        <%
+          order_number = 0
+          if @lessons.present? && @lessons.any?
+            @lessons.each do |lesson|
+        %>
+
+          <tr>
+            <td><%= order_number+= 1 %></td>
+            <td><%= link_to lesson.name, edit_admin_lesson_path(lesson)%></td>
+            <td><%=  button_to "Delete ", admin_lesson_path(id: lesson.id), method: :delete, data: { turbo: false }, class: 'btn-link', onclick: "confirmDelete(event);"  %></td>
+          </tr>
+          <% end %>
+
+        <% end %>
+        </tbody>
+      </table>
+
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer d-flex justify-content-end">
+      <%= paginate @lessons %>
+    </div>
+  <!-- /.card -->
+</div>
+

@@ -1,74 +1,71 @@
 class User < ApplicationRecord
-    has_many :microposts, dependent: :destroy
+  acts_as_paranoid column: :deleted_at
+  has_many :microposts, dependent: :destroy
+  has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  has_many :following, through: :active_relationships, source: :followed
+  has_many :followers, through: :passive_relationships, source: :follower
+  has_many :user_courses, dependent: :destroy
+  has_many :user_section_statuses, dependent: :destroy
+  has_many :activities, dependent: :destroy
 
-    attr_accessor :remember_token, :activation_token, :reset_token
-    before_save :downcase_email
-    before_create :create_activation_digest
+  has_one_attached :avatar
+  validates :avatar, content_type: { in: %w[image/jpeg image/gif image/png], message: "must be a valid image format" }, size: { less_than: 5.megabytes, message: "should be less than 5MB" }
 
-    validates :name, presence: true, length: { maximum: 50 }
-    VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-    validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: true
-    has_secure_password
-    validates :password, presence: true, length: { minimum: 6 }
+  before_save :downcase_email
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, :omniauth_providers => [:google_oauth2]
+  validates :name, presence: true, length: { maximum: 50 }
 
-    def User.digest(string)
-        cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
-        BCrypt::Password.create(string, cost: cost)
+  def feed
+    Micropost
+  end
+
+  def follow(other_user)
+    following << other_user
+    create_activity("#{self.name} Followed #{other_user.name}")
+  end
+
+  def unfollow(other_user)
+    following.delete(other_user)
+    create_activity("#{self.name} Unfollowed #{other_user.name}")
+  end
+
+  def create_activity(activity_description)
+    activities.create(activity: activity_description)
+  end
+
+  def following?(other_user)
+    following.include?(other_user)
+  end
+
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid)
+      .or(where(email: auth.info.email))
+      .unscope(where: :deleted_at)
+      .first_or_create do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0,20]
+      user.name = auth.info.name
+    end
+  end
+
+  def send_reset_password_instructions
+    token = set_reset_password_token
+    send_reset_password_instructions_job(token)
+  end
+
+  private
+    def downcase_email
+      self.email = email.downcase
     end
 
-    def User.new_token
-        SecureRandom.urlsafe_base64
+    def self.ransackable_attributes(*)
+      %w[name]
     end
 
-    def remember
-        self.remember_token = User.new_token
-        update_attribute(:remember_digest, User.digest(remember_token))
+    def send_reset_password_instructions_job(token)
+      ResetPasswordEmailJob.perform_later(self, token)
     end
-
-    def authenticated?(attribute, token)
-        digest = send("#{attribute}_digest")
-        return false if digest.nil?
-        BCrypt::Password.new(digest).is_password?(token)
-    end
-
-    def forget
-        update_attribute(:remember_digest, nil)
-    end
-
-    def activate
-        update_attribute(:activated, true)
-        update_attribute(:activated_at, Time.zone.now)
-    end
-
-    def send_activation_email
-        UserMailer.account_activation(self).deliver_now
-    end
-
-    def create_reset_digest
-        self.reset_token = User.new_token
-        update_attribute(:reset_digest, User.digest(reset_token))
-        update_attribute(:reset_sent_at, Time.zone.now)
-    end
-
-    def send_password_reset_email
-        UserMailer.password_reset(self).deliver_now
-    end
-
-    def password_reset_expired?
-        reset_sent_at < 2.hours.ago
-    end
-
-    def feed
-        Micropost.where("user_id = ?", id)
-    end
-
-    private
-        def downcase_email
-            self.email = email.downcase
-        end
-
-        def create_activation_digest
-            self.activation_token = User.new_token
-            self.activation_digest = User.digest(activation_token)
-        end
 end

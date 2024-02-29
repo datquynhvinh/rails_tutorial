@@ -1,29 +1,47 @@
 Rails.application.routes.draw do
-  get 'password_resets/new'
-  get 'password_resets/edit'
-  get 'sessions/new'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
-
-  # Defines the root path route ("/")
-  # root "posts#index"
+  devise_for :users, controllers: {
+    registrations: 'users/registrations',
+    passwords: 'users/passwords',
+    omniauth_callbacks: 'users/omniauth_callbacks',
+    sessions: 'users/sessions'
+  }
 
   root 'static_pages#home'
   get '/help', to: 'static_pages#help'
   get '/about', to: 'static_pages#about'
   get '/contact', to: 'static_pages#contact'
+  get '/news', to: 'static_pages#news'
 
-  get '/signup', to: 'users#new'
-
-  get '/login', to: 'sessions#new'
-  post '/login', to: 'sessions#create'
-  delete '/logout', to: 'sessions#destroy'
-
-  resources :users
-  resources :account_activations, only: [:edit]
-  resources :password_resets, only: [:new, :create, :edit, :update]
   resources :microposts, only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy]
+  resources :courses, only: [:index] do
+    resources :lessons, only: [:index] do
+      resources :sections, only: [:index]
+    end
+  end
+  resources :users do
+    member do
+      get :following, :followers
+    end
+    resources :user_section_statuses, only: [:update], param: :section_id
+  end
+
+  # Admin
+  namespace :admin do
+    root 'dashboard#index'
+    post '/send-notify', to: 'daily_notifications#send_daily_activities_email'
+    resources :dashboard, only: [:index]
+    resources :courses
+    resources :lessons do
+      resources :sections
+    end
+    resources :users do
+      resources :user_courses, only: [:index, :new, :create, :destroy]
+      member do
+        put 'set_role', to: 'users#set_role'
+        get 'lessons/:course_id', to: 'user_courses#lessons', as: :lessons
+        get 'lessons/:course_id/sections/:lesson_id', to: 'user_courses#sections', as: :sections
+      end
+    end
+  end
 end

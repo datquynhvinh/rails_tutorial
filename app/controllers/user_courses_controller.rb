@@ -1,0 +1,3 @@
+class UserCoursesController < ApplicationController
+
+end

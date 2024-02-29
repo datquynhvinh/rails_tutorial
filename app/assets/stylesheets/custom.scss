@@ -7,6 +7,7 @@ $gray-lighter: #777;
 $state-danger-text: #777;
 $gray-light: #777;
 
+
 /* universal */
 body {
     padding-top: 60px;
@@ -155,7 +156,7 @@ input {
         font-weight: normal;
     }
 }
-#session_remember_me {
+#user_remember_me {
     width: auto;
     margin-left: 0;
 }
@@ -218,4 +219,137 @@ span.image {
     input {
         border: 0;
     }
+}
+
+/* sidebar */
+.gravatar {
+    float: left;
+    margin-right: 10px;
+}
+.gravatar_edit {
+    margin-top: 15px;
+}
+.stats {
+    overflow: auto;
+    margin-top: 0;
+    padding: 0;
+    a {
+        float: left;
+        padding: 0 10px;
+        border-left: 1px solid $gray-lighter;
+        color: gray;
+        &:first-child {
+            padding-left: 0;
+            border: 0;
+        }
+        &:hover {
+            text-decoration: none;
+            color: blue;
+        }
+    }
+    strong {
+        display: block;
+    }
+}
+.user_avatars {
+    overflow: auto;
+    margin-top: 10px;
+    .gravatar {
+        margin: 1px 1px;
+    }
+    a {
+        padding: 0;
+    }
+}
+.users.follow {
+    padding: 0;
+}
+
+.auth-link {
+    margin-top: 10px;
+    height: 35px;
+    width: 28%;
+    display: inline-block;
+    padding: 10px 20px;
+    background-image: url('google_login_icon.png');
+    background-size: cover;
+    color: #ffffff;
+    text-decoration: none;
+}
+.sidebar-admin {
+    overflow-x: initial !important;
+    overflow-y: initial !important;;
+}
+.sidebar-search {
+    display: flex !important;
+}
+.sidebar-user-info {
+    height: 50px;
+    display: flex;
+}
+.sidebar-avatar {
+    margin: 0px 16px;
+}
+.sidebar-name {
+    font-size: 20px;
+}
+.username {
+    color: white;
+    font-size: 18px;
+    margin: 5px
+}
+.user-panel .image {
+    padding-top: 6px;
+}
+.user-panel img {
+    width: 3.1rem !important;
+}
+.course-image {
+    height: 300px;
+}
+.lessons-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+.no-underline {
+    text-decoration: none !important;
+}
+.relative {
+    position: relative;
+}
+.overflow-hidden {
+    overflow: hidden;
+}
+.no-underline {
+    text-decoration: none;
+}
+.course-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.bg-info {
+    background-color: #63a69f;
+}
+.bg-warning {
+    background-color: #f5b041;
+}
+.bg-success {
+    background-color: #5cb85c;
+}
+.checkbox-list {
+    max-width: 400px;
+    margin: auto;
+}
+.form-check {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.form-check-input {
+    margin-right: 10px;
+}
+.btn-primary {
+    margin-top: 10px;
 }

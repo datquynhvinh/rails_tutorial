@@ -1,0 +1,73 @@
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Logo -->
+  <%= link_to root_path, class: "brand-link sidebar-user-info" do %>
+    <%= image_tag("/assets/adminlte/dist/img/AdminLTELogo.png", alt: "AdminLTE Logo", class: "brand-image img-circle elevation-3 sidebar-avatar", style: "opacity: .8") %>
+    <span class="brand-text font-weight-light sidebar-name"><b>RAILS DEMO</b></span>
+  <% end %>
+
+  <!-- Sidebar -->
+  <div class="sidebar sidebar-admin">
+    <!-- Sidebar user panel (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <img src="/assets/adminlte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+      </div>
+      <div class="info">
+        <span class="d-block username">
+          <%= current_user.name %>
+        </span>
+      </div>
+    </div>
+
+    <!-- SidebarSearch Form -->
+    <input id="sidebar-search-input" class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item">
+          <%= link_to(admin_users_path, class: "nav-link", data: { turbo: false}) do %>
+            <i class="nav-icon 	fas fa-id-card"></i>
+            <p>Users</p>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to(admin_courses_path, class: "nav-link", data: { turbo: false}) do %>
+            <i class="nav-icon fas fa-th"></i>
+            <p>Courses
+              <span class="right badge badge-danger">New</span>
+            </p>
+          <% end %>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>
+
+<script>
+    const searchInput = document.getElementById('sidebar-search-input');
+    searchInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            performSearch();
+        }
+    });
+
+    function performSearch() {
+        let searchTerm = searchInput.value;
+        event.preventDefault();
+
+        let search = searchTerm.trim();
+        let currentPath = window.location.pathname;
+        window.location.href = `${currentPath}?search=${encodeURIComponent(search)}`;
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchValue = new URLSearchParams(window.location.search).get("search");
+
+        if (searchInput && searchValue !== null) {
+            searchInput.value = decodeURIComponent(searchValue);
+        }
+    });
+</script>

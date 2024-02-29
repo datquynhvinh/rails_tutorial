@@ -1,0 +1,17 @@
+<li style="display: flex;">
+  <% if user.avatar.attached? %>
+    <%= image_tag user.avatar, size: '50x50' %>
+  <% else %>
+    <%= gravatar_for user, size: 50 %>
+  <% end %>
+
+  <%= link_to user.name, admin_user_path(user), style: "margin: 14px;" %>
+  <% unless current_user?(user) %>
+    <%=  button_to "| Delete account", admin_user_path(user), method: :delete, data: { turbo: false }, class: 'btn-link', style: "margin: 11px -18px;", onclick: "confirmDelete(event);"  %>
+    <% if user.is_admin? %>
+      <%= button_to "| Remove Admin Role", set_role_admin_user_path(user), method: :put, params: { is_admin: 0 }, data: { turbo: false }, class: 'btn-link', style: "margin: 11px 10px;"   %>
+    <% else %>
+      <%= button_to "| Add Admin Role", set_role_admin_user_path(user), method: :put, params: { is_admin: 1 }, data: { turbo: false }, class: 'btn-link', style: "margin: 11px 10px;"   %>
+    <% end %>
+  <% end %>
+</li>

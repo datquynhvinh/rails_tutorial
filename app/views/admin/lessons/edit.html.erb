@@ -1,0 +1,45 @@
+<% provide(:title, 'Edit Lesson') %>
+
+<%= form_for(@lesson, url: admin_lesson_path, method: :put, data: { turbo: false }) do |f| %>
+  <div class="content">
+    <div class="card">
+      <div class="card-header col-12">
+        <h1 class="card-title lessons-title">New Lessons</h1>
+        <%= render 'shared/error_messages', object: f.object %>
+      </div>
+
+      <div class="card-body">
+        <div class="form-group">
+          <label for="inputName">Name</label>
+          <%= f.text_field :name, id: "inputName", class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <label for="inputDescription">Description</label>
+          <%= f.text_area :description, id: "inputDescription", class: "form-control", rows: 4 %>
+        </div>
+        <div class="form-group">
+          <label for="inputStatus">Course</label>
+          <%= f.collection_select :course_id, @courses, :id, :name, { include_blank: "Select one" }, class: "form-control custom-select" %>
+        </div>
+
+        <h3>Sections</h3>
+        <div id="sections" class="ml-5">
+          <%= f.fields_for :sections do |section_form| %>
+            <%= render 'section_fields', f: section_form %>
+          <% end %>
+          <div class="links">
+            <%= link_to_add_association 'Add Section', f, :sections %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+      <div class="col-6">
+        <%= f.submit "Update Lesson", class: "btn btn-success float-right" %>
+      </div>
+      <div class="col-2">
+        <%= link_to "Cancel", admin_courses_path, class: "btn btn-secondary cancel-button" %>
+      </div>
+    </div>
+  </div>
+<% end %>

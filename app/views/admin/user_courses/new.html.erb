@@ -1,0 +1,31 @@
+<% provide(:title, 'New Lesson') %>
+
+<%= form_for(@user_course, url: admin_user_user_courses_path, method: :post, data: { turbo: false }) do |f| %>
+  <div class="content">
+    <div class="card">
+      <div class="card-header col-12">
+        <h1 class="card-title lessons-title">Assign Course</h1>
+        <%= render 'shared/error_messages', object: f.object %>
+      </div>
+
+      <div class="card-body">
+        <div class="form-group">
+          <% @courses.each do |course| %>
+            <div class="form-check">
+              <%= check_box_tag "course_ids[]", course.id, course.enrolled == 1, class: "form-check-input" %>
+              <%= label_tag "course_ids_#{course.id}", course.name, class: "form-check-label" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+      <div class="col-6">
+        <%= f.submit "Assign Course", class: "btn btn-success float-right" %>
+      </div>
+      <div class="col-2">
+        <%= link_to "Cancel", admin_user_user_courses_path(user_id: @user.id), class: "btn btn-secondary cancel-button" %>
+      </div>
+    </div>
+  </div>
+<% end %>
