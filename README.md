@@ -11,5 +11,3 @@ Ghi đè toàn bộ crontab (hãy cẩn thận với cái này!)
 
 Xem tất cả các tùy chọn cho lệnh whenever
 * bundle exec whenever -h
-
-
