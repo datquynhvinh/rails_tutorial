@@ -70,21 +70,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_02_034825) do
   end
 
   create_table "lessons", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
-    t.bigint "course_id", null: false
+    t.bigint "course_id"
     t.text "name"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["course_id"], name: "index_lessons_on_course_id"
+    t.index ["course_id"], name: "fk_rails_4bcdb571d9"
   end
 
   create_table "microposts", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.text "content"
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id", "created_at"], name: "index_microposts_on_user_id_and_created_at"
-    t.index ["user_id"], name: "index_microposts_on_user_id"
+    t.index ["user_id"], name: "fk_rails_558c81314b"
   end
 
   create_table "relationships", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
@@ -130,11 +129,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_02_034825) do
   create_table "user_section_statuses", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "section_id", null: false
-    t.integer "status", default: 0, comment: "user section status 0: open, 1: done."
+    t.integer "status", default: 0, comment: "user section status 0: open, 1: process, 2: done."
     t.date "completed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["section_id"], name: "fk_user_section_statuses_2_idx"
+    t.index ["section_id"], name: "index_user_section_statuses_on_section_id"
+    t.index ["user_id", "section_id"], name: "index_user_section_statuses_on_user_id_and_section_id", unique: true
     t.index ["user_id"], name: "index_user_section_statuses_on_user_id"
   end
 
@@ -159,13 +159,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_02_034825) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "users", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "lessons", "courses"
+  add_foreign_key "lessons", "courses", on_update: :cascade, on_delete: :cascade
   add_foreign_key "microposts", "users", on_update: :cascade, on_delete: :cascade
   add_foreign_key "relationships", "users", column: "followed_id", on_update: :cascade, on_delete: :cascade
   add_foreign_key "relationships", "users", column: "follower_id", on_update: :cascade, on_delete: :cascade
   add_foreign_key "sections", "lessons", on_update: :cascade, on_delete: :cascade
   add_foreign_key "user_courses", "courses", on_update: :cascade, on_delete: :cascade
   add_foreign_key "user_courses", "users", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "user_section_statuses", "sections", name: "fk_user_section_statuses_2"
-  add_foreign_key "user_section_statuses", "users", name: "fk_user_section_statuses_1", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "user_section_statuses", "sections", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "user_section_statuses", "users", on_update: :cascade, on_delete: :cascade
 end
