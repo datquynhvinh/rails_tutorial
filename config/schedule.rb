@@ -5,6 +5,6 @@ env :PATH, ENV['PATH']
 env :GEM_PATH, ENV['GEM_PATH']
 
 
-every 1.day, at: '11:23' do
+every 1.day, at: '00:00' do
   runner "Admin::DailyNotificationsController.new.send_daily_activities_email"
 end
