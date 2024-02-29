@@ -2,7 +2,7 @@
   "dependencies": {
     "@rails/webpacker": "5.2.1",
     "bootstrap": "3.4.1",
-    "jquery": "2.2.4",
+    "jquery": "^2.2.4",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"
   },
