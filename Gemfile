@@ -70,7 +70,6 @@ end
 
 gem 'webpacker'
 
-gem 'bootstrap-sass', '3.4.1'
 gem 'bootstrap', '~> 5.0.2'
 
 gem 'bcrypt', '3.1.13'
