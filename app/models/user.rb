@@ -13,7 +13,7 @@ class User < ApplicationRecord
   validates :avatar, content_type: { in: %w[image/jpeg image/gif image/png], message: "must be a valid image format" }, size: { less_than: 5.megabytes, message: "should be less than 5MB" }
 
   before_save :downcase_email
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, :omniauth_providers => [:google_oauth2]
   validates :name, presence: true, length: { maximum: 50 }

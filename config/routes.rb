@@ -3,7 +3,8 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
     passwords: 'users/passwords',
     omniauth_callbacks: 'users/omniauth_callbacks',
-    sessions: 'users/sessions'
+    sessions: 'users/sessions',
+    confirmations: 'users/confirmations',
   }
 
   root 'static_pages#home'

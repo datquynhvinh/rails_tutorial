@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_02_034825) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_09_143940) do
   create_table "active_storage_attachments", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -67,6 +67,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_02_034825) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
+  create_table "influencers", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.integer "scout_status", default: 10, null: false, comment: "スカウト状況"
+    t.integer "partner_status", default: 10, null: false, comment: "発注ステータス"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["user_id"], name: "user_id", unique: true
   end
 
   create_table "lessons", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
@@ -151,6 +160,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_02_034825) do
     t.string "uid"
     t.boolean "is_admin", default: false
     t.datetime "deleted_at"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -159,6 +173,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_02_034825) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "users", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "influencers", "users"
   add_foreign_key "lessons", "courses", on_update: :cascade, on_delete: :cascade
   add_foreign_key "microposts", "users", on_update: :cascade, on_delete: :cascade
   add_foreign_key "relationships", "users", column: "followed_id", on_update: :cascade, on_delete: :cascade
