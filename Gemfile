@@ -69,54 +69,29 @@ group :test do
 end
 
 gem 'webpacker'
-
-gem 'bootstrap', '~> 5.0.2'
-
+gem 'bootstrap-sass', '3.4.1'
 gem 'bcrypt', '3.1.13'
-
 gem 'faker', '2.18'
-
 gem 'will_paginate', '3.1.8'
 gem 'bootstrap-will_paginate', '1.0.0'
-
 gem 'kaminari'
-
 gem 'letter_opener', group: :development
-
 gem 'jquery-rails'
-
 gem 'active_storage_validations', '0.8.2'
-
 gem 'image_processing', '1.9.3'
-
 gem 'mini_magick', '4.9.5'
-
 gem 'devise'
-
 gem 'pry-rails'
-
 gem "omniauth"
-
 gem "omniauth-google-oauth2"
-
 gem 'omniauth-rails_csrf_protection'
-
 gem 'dotenv-rails'
-
 gem "paranoia"
-
 gem "ransack"
-
 gem 'delayed_job_active_record'
-
 gem 'cocoon'
-
 gem 'activerecord-session_store'
-
 gem 'whenever'
-
 gem 'daemons'
-
 gem "sidekiq"
-
 gem 'elasticsearch-rails'
